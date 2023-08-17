@@ -2,6 +2,7 @@
 using BookReviewing_MVC.Services.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 namespace BookReviewing_MVC.Services.Repositories
 {
@@ -16,19 +17,29 @@ namespace BookReviewing_MVC.Services.Repositories
             _dbSet = _db.Set<T>();
         }
 
-        public void Create(T entity)
+        public async Task Create(T entity)
         {
-            throw new NotImplementedException();
+           await _dbSet.AddAsync(entity);
         }
 
         public void Delete(T entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Remove(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter,bool tracked = true)
+        public async Task<T> Get(Expression<Func<T, bool>> filter,bool tracked = true)
         {
-            throw new NotImplementedException();
+            IQueryable<T> Query;
+            if (filter == null)
+            {
+                Query = _dbSet;
+            }
+            Query = _dbSet.Where(filter!);
+            if (!tracked)
+            {
+                Query = _dbSet.Where(filter!).AsNoTracking();
+            }
+            return await Query.FirstOrDefaultAsync();
         }
 
         public async Task<List<T>> GetAll(Expression<Func<T, bool>> filter, bool tracked = true)
@@ -37,8 +48,11 @@ namespace BookReviewing_MVC.Services.Repositories
             if (filter == null)
             {
                 Query = _dbSet;
-            }
-                Query = _dbSet.Where(filter);
+            }      
+            Query = _dbSet.Where(filter!);
+            if (!tracked) 
+            {
+                Query = _dbSet.Where(filter!).AsNoTracking();
             }
             return await Query.ToListAsync();
         }
