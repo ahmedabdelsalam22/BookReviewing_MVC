@@ -1,7 +1,40 @@
-﻿
+﻿@using BookReviewing_MVC.Models;
+@model Book
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<div class="row-12">
+    <h2>Create Book</h2>
+</div>
 
+<form method="post">
+    <div class="m-3">
+        <label asp-for="Title">Title</label>
+        <input asp-for="Title" type="text" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Isbn">Isbn</label>
+        <input asp-for="Isbn" type="text" class="form-control" />
+        <span asp-validation-for="Isbn" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="DatePublished">Title</label>
+        <input asp-for="DatePublished" type="datetime" class="form-control" />
+        <span asp-validation-for="DatePublished" class="text-danger"></span>
+    </div>
+    <div class="row">
+        <div class="m-3">
+            <button type="submit" class="btn btn-primary">
+                Create
+            </button>
+        </div>
+        <div class="m-3">
+            <a asp-controller="Book" asp-action="Index" class="btn btn-secondary">
+                Back To List
+            </a>
+        </div>
+    </div>
+    
+</form>
