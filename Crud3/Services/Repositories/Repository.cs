@@ -29,28 +29,28 @@ namespace BookReviewing_MVC.Services.Repositories
 
         public async Task<T> Get(Expression<Func<T, bool>>? filter = null,bool tracked = true)
         {
-            IQueryable<T> Query;
-            if (filter == null)
+            IQueryable<T> Query = _dbSet;
+            if (filter != null)
             {
-                Query = _dbSet;
+                Query = _dbSet.Where(filter);
             }
             if (!tracked)
             {
-                Query = _dbSet.Where(filter!).AsNoTracking();
+                Query = _dbSet.AsNoTracking();
             }
             return await Query.FirstOrDefaultAsync();
         }
 
         public async Task<List<T>> GetAll(Expression<Func<T, bool>>? filter = null, bool tracked = true)
         {
-            IQueryable<T> Query;
-            if (filter == null)
+            IQueryable<T> Query = _dbSet;
+            if (filter != null)
             {
-                Query = _dbSet;
+                Query = _dbSet.Where(filter);
             }      
             if (!tracked) 
             {
-                Query = _dbSet.Where(filter!).AsNoTracking();
+                Query = _dbSet.AsNoTracking();
             }
             return await Query.ToListAsync();
         }

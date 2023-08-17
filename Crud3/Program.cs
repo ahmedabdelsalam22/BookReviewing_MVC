@@ -1,6 +1,8 @@
+using BookReviewing_MVC;
 using BookReviewing_MVC.Models;
 using BookReviewing_MVC.Services.IRepositories;
 using BookReviewing_MVC.Services.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 
+builder.Services.AddAutoMapper(typeof(MappingConfig));
 
 var app = builder.Build();
 
