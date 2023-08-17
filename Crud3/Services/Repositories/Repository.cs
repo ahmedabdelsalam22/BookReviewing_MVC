@@ -2,6 +2,7 @@
 using BookReviewing_MVC.Services.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 namespace BookReviewing_MVC.Services.Repositories
 {
@@ -16,9 +17,9 @@ namespace BookReviewing_MVC.Services.Repositories
             _dbSet = _db.Set<T>();
         }
 
-        public void Create(T entity)
+        public async Task Create(T entity)
         {
-            throw new NotImplementedException();
+           await _dbSet.AddAsync(entity);
         }
 
         public void Delete(T entity)

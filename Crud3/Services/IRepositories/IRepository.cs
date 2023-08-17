@@ -7,7 +7,7 @@ namespace BookReviewing_MVC.Services.IRepositories
     {
         Task<List<T>> GetAll(Expression<Func<T,bool>> filter , bool tracked = true);
         Task<T> Get(Expression<Func<T, bool>> filter,bool tracked = true);
-        void Create(T entity);
+        Task Create(T entity);
         void Delete(T entity);
     }
 }
