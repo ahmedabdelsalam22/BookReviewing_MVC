@@ -27,7 +27,7 @@ namespace BookReviewing_MVC.Services.Repositories
             _dbSet.Remove(entity);
         }
 
-        public async Task<T> Get(Expression<Func<T, bool>> filter,bool tracked = true)
+        public async Task<T> Get(Expression<Func<T, bool>>? filter = null,bool tracked = true)
         {
             IQueryable<T> Query;
             if (filter == null)
@@ -42,7 +42,7 @@ namespace BookReviewing_MVC.Services.Repositories
             return await Query.FirstOrDefaultAsync();
         }
 
-        public async Task<List<T>> GetAll(Expression<Func<T, bool>> filter, bool tracked = true)
+        public async Task<List<T>> GetAll(Expression<Func<T, bool>>? filter = null, bool tracked = true)
         {
             IQueryable<T> Query;
             if (filter == null)

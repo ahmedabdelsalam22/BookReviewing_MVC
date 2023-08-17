@@ -1,0 +1,30 @@
+﻿@using BookReviewing_MVC.Models;
+@model IEnumerable<Book>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Book list</h2>
+
+<table class="table table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Isbn</th>
+            <th>DatePublished</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var book in Model)
+        {
+        <tr>
+                <td>@book.Id</td>
+                <td>@book.Title</td>
+                <td>@book.Isbn</td>
+                <td>@book.DatePublished</td>
+        </tr>
+        }
+    </tbody>
+</table>
