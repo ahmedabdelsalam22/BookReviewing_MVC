@@ -34,7 +34,6 @@ namespace BookReviewing_MVC.Services.Repositories
             {
                 Query = _dbSet;
             }
-            Query = _dbSet.Where(filter!);
             if (!tracked)
             {
                 Query = _dbSet.Where(filter!).AsNoTracking();
