@@ -3,5 +3,7 @@
     public interface IUnitOfWork
     {
         public IBookRepository _bookRepository { get; }
+
+        Task save();
     }
 }
