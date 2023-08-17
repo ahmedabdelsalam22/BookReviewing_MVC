@@ -7,7 +7,7 @@ namespace BookReviewing_MVC.Services.Repositories
     public class BookRepository : Repository<Book>, IBookRepository
     {
         private readonly ApplicationDbContext _context;
-        public BookRepository(ApplicationDbContext db, ApplicationDbContext context) : base(db)
+        public BookRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }
