@@ -1,3 +1,4 @@
+using BookReviewing_MVC.Models;
 using BookReviewing_MVC.Services.IRepositories;
 using BookReviewing_MVC.Services.Repositories;
 
@@ -6,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<ApplicationDbContext>();
 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 
 
