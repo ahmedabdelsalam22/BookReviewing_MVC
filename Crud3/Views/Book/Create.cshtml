@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<div class="row-12">
+<div class="m-3">
     <h2>Create Book</h2>
 </div>
 
@@ -20,8 +20,8 @@
         <span asp-validation-for="Isbn" class="text-danger"></span>
     </div>
     <div class="m-3">
-        <label asp-for="DatePublished">Title</label>
-        <input asp-for="DatePublished" type="datetime" class="form-control" />
+        <label asp-for="DatePublished">DatePublished</label>
+        <input asp-for="DatePublished" type="date" class="form-control" />
         <span asp-validation-for="DatePublished" class="text-danger"></span>
     </div>
     <div class="row">
