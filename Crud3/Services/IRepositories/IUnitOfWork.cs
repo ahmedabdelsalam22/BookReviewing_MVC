@@ -2,7 +2,7 @@
 {
     public interface IUnitOfWork
     {
-        public IBookRepository _bookRepository { get; }
+        public IBookRepository bookRepository { get; }
 
         Task save();
     }

@@ -4,26 +4,48 @@
     ViewData["Title"] = "Index";
 }
 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <h2>Books</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a class="btn btn-primary" asp-controller="Book" asp-action="Create">
+                Create
+            </a>
+        </div>
+    </div>
 
-<table class="table table-striped" style="width:100%">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th>Isbn</th>
-            <th>DatePublished</th>
-        </tr>
-    </thead>
+    <div class="container-p3">
+        <table class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Isbn</th>
+                    <th>DatePublished</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
 
-    <tbody>
-        @foreach (var book in Model)
-        {
-        <tr>
-                <td>@book.Id</td>
-                <td>@book.Title</td>
-                <td>@book.Isbn</td>
-                <td>@book.DatePublished</td>
-        </tr>
-        }
-    </tbody>
-</table>
+            <tbody>
+                @foreach (var book in Model)
+                {
+                    <tr>
+                        <td>@book.Id</td>
+                        <td>@book.Title</td>
+                        <td>@book.Isbn</td>
+                        <td>@book.DatePublished</td>
+                        <td width="10%">
+                            <button asp-controller="Book" asp-action="Update" class="btn btn-primary">Update</button>
+                        </td>
+                        <td width="10%">
+                            <button asp-controller="Book" asp-action="Delete" class="btn btn-danger">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

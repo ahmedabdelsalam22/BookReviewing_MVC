@@ -9,9 +9,9 @@ namespace BookReviewing_MVC.Services.Repositories
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
-            _bookRepository = new BookRepository(_context);
+            bookRepository = new BookRepository(_context);
         }
-        public IBookRepository _bookRepository { get; private set; }
+        public IBookRepository bookRepository { get; private set; }
 
         public async Task save()
         {
