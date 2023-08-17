@@ -38,8 +38,6 @@ namespace BookReviewing_MVC.Services.Repositories
             {
                 Query = _dbSet;
             }
-            else 
-            {
                 Query = _dbSet.Where(filter);
             }
             return await Query.ToListAsync();
