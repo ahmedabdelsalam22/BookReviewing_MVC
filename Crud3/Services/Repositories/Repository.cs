@@ -26,7 +26,7 @@ namespace BookReviewing_MVC.Services.Repositories
             throw new NotImplementedException();
         }
 
-        public T Get(bool tracked = true)
+        public T Get(Expression<Func<T, bool>> filter,bool tracked = true)
         {
             throw new NotImplementedException();
         }
