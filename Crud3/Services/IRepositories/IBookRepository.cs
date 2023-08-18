@@ -1,5 +1,5 @@
-﻿using BookReviewing_MVC.Models;
-using BookReviewing_MVC.Services.Repositories;
+﻿using BookReviewing_MVC.Services.Repositories;
+using BookReviewingMVC.Models;
 
 namespace BookReviewing_MVC.Services.IRepositories
 {

@@ -1,4 +1,4 @@
-namespace Crud3.Models
+﻿namespace BookReviewing_MVC.Models
 {
     public class ErrorViewModel
     {

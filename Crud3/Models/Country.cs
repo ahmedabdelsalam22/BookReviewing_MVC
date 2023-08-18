@@ -1,13 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using Newtonsoft.Json;
+using JsonIgnoreAttribute = System.Text.Json.Serialization.JsonIgnoreAttribute;
 
-namespace BookReviewing_MVC.Models;
 
-public partial class Country
+namespace BookReviewingMVC.Models
 {
-    public int Id { get; set; }
-
-    public string Name { get; set; } = null!;
-
-    public virtual ICollection<Author> Authors { get; set; } = new List<Author>();
+    public class Country
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+        [Required]
+        [MaxLength(50,ErrorMessage ="Country name can't be more than 50 characters")]
+        public string Name { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Author>? Authors { get; set; }
+    }
 }
