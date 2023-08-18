@@ -58,5 +58,20 @@ namespace BookReviewing_MVC.Controllers
             }
             return View(countryCreateDTO);
         }
+
+        public async Task<IActionResult> Update(int? id)
+        {
+            if(id == 0 || id == null)
+            {
+                return BadRequest();
+            }
+            Country country = await _unitOfWork.countryRepository.Get(filter: x=>x.Id == id);
+            if (country == null)
+            {
+                return NotFound();
+            }
+            CountryDTO countryDTO = _mapper.Map<CountryDTO>(country);
+            return View(countryDTO);
+        }
     }
 }
