@@ -44,5 +44,21 @@ namespace BookReviewing_MVC.Controllers
             await _unitOfWork.save();
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Update(int bookId)
+        {
+            Book book = await _unitOfWork.bookRepository.Get(filter:x=>x.Id == bookId);
+            if (book == null)
+            {
+                ModelState.AddModelError("CustomError","this book not found!");
+            }
+            return View(book);
+        }
+
+        [HttpPost]
+        public IActionResult Update()
+        {
+
+        }
     }
 }
