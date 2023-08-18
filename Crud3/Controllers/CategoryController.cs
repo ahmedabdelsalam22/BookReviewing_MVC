@@ -11,13 +11,13 @@ namespace BookReviewing_MVC.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private IMapper _mapper;
 
-        public CategoryController(IUnitOfWork unitOfWork,IMapper mapper)
+        public CategoryController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public  async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             IEnumerable<Category> categories = await _unitOfWork.categoryRepository.GetAll();
             if (categories == null)
@@ -43,12 +43,27 @@ namespace BookReviewing_MVC.Controllers
             Category categoryInDb = await _unitOfWork.categoryRepository.Get(filter: x => x.Name.ToLower() == categoryCreateDTO.Name.ToLower());
             if (categoryInDb != null)
             {
-                ModelState.AddModelError("CustomError","categoty already exists");
+                ModelState.AddModelError("CustomError", "categoty already exists");
             }
             Category category = _mapper.Map<Category>(categoryCreateDTO);
             await _unitOfWork.categoryRepository.Create(category);
             await _unitOfWork.save();
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Update(int? categoryId)
+        {
+            if (categoryId == 0 || categoryId == null)
+            {
+                return NotFound();
+            }
+            Category category = await _unitOfWork.categoryRepository.Get(filter: x=>x.Id == categoryId);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            CategoryDTO categoryDTO = _mapper.Map<CategoryDTO>(category);
+            return View(categoryDTO);
         }
     }
 }
