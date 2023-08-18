@@ -4,7 +4,7 @@
     ViewData["Title"] = "Update";
 }
 
-<form method="post">
+<form method="post" asp-action="Update">
     <div class="m-3">
         <label asp-for="Name"></label>
         <input asp-for="Name" type="text" class="form-control" />
@@ -12,7 +12,7 @@
     </div>
     <div class="m-3">
         <button type="submit" class="btn btn-primary">
-            Create
+            Update
         </button>
     </div>
     <div class="m-3">
