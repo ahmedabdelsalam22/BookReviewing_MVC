@@ -41,7 +41,7 @@
                             <a asp-controller="Book" asp-action="Update" asp-route-bookId="@book.Id" class="btn btn-primary">Update</a>
                         </td>
                         <td width="10%">
-                            <a asp-controller="Book" asp-action="Delete" class="btn btn-danger">Delete</a>
+                            <a asp-controller="Book" asp-action="Delete" asp-route-bookId="@book.Id" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 }

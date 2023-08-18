@@ -89,10 +89,10 @@ namespace BookReviewing_MVC.Controllers
                 ModelState.AddModelError("CustomError","this book not found");
             }
             Book book = await _unitOfWork.bookRepository.Get(filter:x=>x.Id == bookId);
-            if (book == null)
-            {
-                return NotFound("book not found");
-            }
+            //if (book == null)
+            //{
+            //    return NotFound("book not found");
+            //}
             _unitOfWork.bookRepository.Delete(book);
             await _unitOfWork.save();
             return RedirectToAction("Index");
