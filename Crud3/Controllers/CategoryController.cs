@@ -69,5 +69,22 @@ namespace BookReviewing_MVC.Controllers
             CategoryDTO categoryDTO = _mapper.Map<CategoryDTO>(category);
             return View(categoryDTO);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(CategoryUpdateDTO categoryUpdateDTO)
+        {
+            if (categoryUpdateDTO == null)
+            {
+                return BadRequest("model must't be empty");
+            }
+            Category category = _mapper.Map<Category>(categoryUpdateDTO);
+            if (ModelState.IsValid) 
+            {
+                _unitOfWork.categoryRepository.Update(category);
+                await _unitOfWork.save();
+                return RedirectToAction("Index");
+            }
+            return View(categoryUpdateDTO);
+        }
     }
 }
