@@ -1,4 +1,6 @@
-﻿using BookReviewing_MVC.Services.IRepositories;
+﻿using AutoMapper;
+using BookReviewing_MVC.DTOS;
+using BookReviewing_MVC.Services.IRepositories;
 using BookReviewingMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,10 +9,12 @@ namespace BookReviewing_MVC.Controllers
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private IMapper _mapper;
 
-        public CategoryController(IUnitOfWork unitOfWork)
+        public CategoryController(IUnitOfWork unitOfWork,IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public  async Task<IActionResult> Index()
@@ -21,6 +25,30 @@ namespace BookReviewing_MVC.Controllers
                 return NotFound();
             }
             return View(categories);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CategoryCreateDTO categoryCreateDTO)
+        {
+            if (categoryCreateDTO == null)
+            {
+                return NotFound();
+            }
+            Category categoryInDb = await _unitOfWork.categoryRepository.Get(filter: x => x.Name.ToLower() == categoryCreateDTO.Name.ToLower());
+            if (categoryInDb != null)
+            {
+                ModelState.AddModelError("CustomError","categoty already exists");
+            }
+            Category category = _mapper.Map<Category>(categoryCreateDTO);
+            await _unitOfWork.categoryRepository.Create(category);
+            await _unitOfWork.save();
+            return RedirectToAction("Index");
         }
     }
 }
