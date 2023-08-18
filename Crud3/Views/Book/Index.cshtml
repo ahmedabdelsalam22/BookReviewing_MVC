@@ -38,10 +38,10 @@
                         <td>@book.Isbn</td>
                         <td>@book.DatePublished</td>
                         <td width="10%">
-                            <button asp-controller="Book" asp-action="Update" class="btn btn-primary">Update</button>
+                            <a asp-controller="Book" asp-action="Update" asp-route-bookId="@book.Id" class="btn btn-primary">Update</a>
                         </td>
                         <td width="10%">
-                            <button asp-controller="Book" asp-action="Delete" class="btn btn-danger">Delete</button>
+                            <a asp-controller="Book" asp-action="Delete" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 }
