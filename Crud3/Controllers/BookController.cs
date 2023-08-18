@@ -28,11 +28,12 @@ namespace BookReviewing_MVC.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BookCreateDTO bookCreateDTO)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || bookCreateDTO == null)
             {
-                ModelState.AddModelError("CustomError","please fill all fields");
+                ModelState.AddModelError("CustomError","book fields not valid");
             }
             Book bookfromDb = await _unitOfWork.bookRepository.Get(filter:x=>x.Title.ToLower() == bookCreateDTO.Title.ToLower());
             if(bookfromDb != null)
@@ -41,6 +42,34 @@ namespace BookReviewing_MVC.Controllers
             }
             Book book = _mapper.Map<Book>(bookCreateDTO);
             await _unitOfWork.bookRepository.Create(book);
+            await _unitOfWork.save();
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Update(int bookId)
+        {
+            if (bookId == 0)
+            {
+                ModelState.AddModelError("CustomError","bookId must not be 0");
+            }
+            Book book = await _unitOfWork.bookRepository.Get(filter:x=>x.Id == bookId);
+            if (book == null)
+            {
+                ModelState.AddModelError("CustomError","this book not found!");
+            }
+            return View(book);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(BookUpdateDTO bookUpdateDTO)
+        {
+            if (!ModelState.IsValid || bookUpdateDTO == null)
+            {
+                ModelState.AddModelError("CustomError", "book fields not valid");
+            }
+            Book book = _mapper.Map<Book>(bookUpdateDTO);
+            _unitOfWork.bookRepository.Update(book);
             await _unitOfWork.save();
             return RedirectToAction("Index");
         }
