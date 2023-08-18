@@ -13,6 +13,7 @@ namespace BookReviewing_MVC
             CreateMap<CategoryCreateDTO, Category>();
             CreateMap<CategoryUpdateDTO, Category>();
             CreateMap<Category, CategoryDTO>().ReverseMap();
+            CreateMap<Country, CountryDTO>();
         }
     }
 }
