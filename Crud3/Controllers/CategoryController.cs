@@ -77,7 +77,6 @@ namespace BookReviewing_MVC.Controllers
             {
                 return BadRequest("model must't be empty");
             }
-            Category category = _mapper.Map<Category>(categoryUpdateDTO);
             if (ModelState.IsValid)
             {
                 _unitOfWork.categoryRepository.Update(category);
