@@ -73,5 +73,22 @@ namespace BookReviewing_MVC.Controllers
             CountryDTO countryDTO = _mapper.Map<CountryDTO>(country);
             return View(countryDTO);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(CountryUpdateDTO countryUpdateDTO)
+        {
+            if (countryUpdateDTO == null || !ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            if (ModelState.IsValid)
+            {
+               Country country = _mapper.Map<Country>(countryUpdateDTO);
+                _unitOfWork.countryRepository.Update(country);
+                await _unitOfWork.save();
+                return RedirectToAction("Index");
+            }
+            return View(countryUpdateDTO);
+        }
     }
 }
