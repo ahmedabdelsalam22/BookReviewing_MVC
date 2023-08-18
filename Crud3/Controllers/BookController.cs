@@ -40,10 +40,14 @@ namespace BookReviewing_MVC.Controllers
             {
                 ModelState.AddModelError("CustomError","oops book alreay exists");
             }
-            Book book = _mapper.Map<Book>(bookCreateDTO);
-            await _unitOfWork.bookRepository.Create(book);
-            await _unitOfWork.save();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                Book book = _mapper.Map<Book>(bookCreateDTO);
+                await _unitOfWork.bookRepository.Create(book);
+                await _unitOfWork.save();
+                return RedirectToAction("Index");
+            }
+            return View(bookCreateDTO);
         }
 
         public async Task<IActionResult> Update(int bookId)
@@ -68,10 +72,14 @@ namespace BookReviewing_MVC.Controllers
             {
                 ModelState.AddModelError("CustomError", "book fields not valid");
             }
-            Book book = _mapper.Map<Book>(bookUpdateDTO);
-            _unitOfWork.bookRepository.Update(book);
-            await _unitOfWork.save();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                Book book = _mapper.Map<Book>(bookUpdateDTO);
+                _unitOfWork.bookRepository.Update(book);
+                await _unitOfWork.save();
+                return RedirectToAction("Index");
+            }
+            return View(bookUpdateDTO);
         }
     }
 }
