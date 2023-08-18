@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookReviewing_MVC.DTOS;
 using BookReviewing_MVC.Services.IRepositories;
 using BookReviewingMVC.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,15 @@ namespace BookReviewing_MVC.Controllers
             _mapper = mapper;
         }
 
-        public  IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IEnumerable<Country> countries = await _unitOfWork.countryRepository.GetAll();
+            if (countries == null)
+            {
+                return NotFound();
+            }
+            List<CountryDTO> countryDTOs = _mapper.Map<List<CountryDTO>>(countries);
+            return View(countryDTOs);
         }
     }
 }
