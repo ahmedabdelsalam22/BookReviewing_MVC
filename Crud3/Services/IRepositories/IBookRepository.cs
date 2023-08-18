@@ -5,6 +5,5 @@ namespace BookReviewing_MVC.Services.IRepositories
 {
     public interface IBookRepository : IRepository<Book>
     {
-        Book Update(Book book);
     }
 }
