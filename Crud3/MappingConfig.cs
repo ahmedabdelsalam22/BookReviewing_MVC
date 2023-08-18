@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using BookReviewing_MVC.DTOS;
-using BookReviewing_MVC.Models;
+using BookReviewingMVC.Models;
 
 namespace BookReviewing_MVC
 {

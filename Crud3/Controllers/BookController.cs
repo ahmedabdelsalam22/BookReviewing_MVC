@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookReviewing_MVC.DTOS;
 using BookReviewing_MVC.Services.IRepositories;
+using BookReviewingMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookReviewing_MVC.Controllers
@@ -19,6 +20,10 @@ namespace BookReviewing_MVC.Controllers
         public async Task<IActionResult> Index()
         {
             var books = await _unitOfWork.bookRepository.GetAll();
+            if (books == null) 
+            {
+                return NotFound("no books found");
+            }
             return View(books);
         }
 
@@ -49,13 +54,13 @@ namespace BookReviewing_MVC.Controllers
             return View(bookCreateDTO);
         }
 
-        public async Task<IActionResult> Update(int bookId)
+        public async Task<IActionResult> Update(int? id)
         {
-            if (bookId == 0)
+            if (id == 0|| id == null)
             {
-                ModelState.AddModelError("CustomError","bookId must not be 0");
+                return NotFound();
             }
-            Book book = await _unitOfWork.bookRepository.Get(filter:x=>x.Id == bookId);
+            Book book = await _unitOfWork.bookRepository.Get(filter:x=>x.Id == id);
             if (book == null)
             {
                 ModelState.AddModelError("CustomError","this book not found!");

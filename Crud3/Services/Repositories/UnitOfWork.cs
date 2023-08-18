@@ -1,4 +1,4 @@
-﻿using BookReviewing_MVC.Models;
+﻿using BookReviewing_MVC.Data;
 using BookReviewing_MVC.Services.IRepositories;
 
 namespace BookReviewing_MVC.Services.Repositories

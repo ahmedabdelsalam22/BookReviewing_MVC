@@ -1,4 +1,4 @@
-﻿@using BookReviewing_MVC.Models;
+﻿@using BookReviewingMVC.Models;
 @model IEnumerable<Book>
 @{
     ViewData["Title"] = "Index";
@@ -38,10 +38,10 @@
                         <td>@book.Isbn</td>
                         <td>@book.DatePublished</td>
                         <td width="10%">
-                            <a asp-controller="Book" asp-action="Update" asp-route-bookId="@book.Id" class="btn btn-primary">Update</a>
+                            <a asp-controller="Book" asp-action="Update" asp-route-id="@book.Id" class="btn btn-primary">Update</a>
                         </td>
                         <td width="10%">
-                            <a asp-controller="Book" asp-action="Delete" asp-route-bookId="@book.Id" class="btn btn-danger">Delete</a>
+                            <a asp-controller="Book" asp-action="Delete" asp-route-id="@book.Id" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                 }

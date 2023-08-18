@@ -4,9 +4,9 @@ using BookReviewingMVC.Models;
 
 namespace BookReviewing_MVC.Services.Repositories
 {
-    public class BookRepository : Repository<Book>, IBookRepository
+    public class CategoryRepository : Repository<Category>, ICategoryRepository
     {
-        public BookRepository(ApplicationDbContext db) : base(db)
+        public CategoryRepository(ApplicationDbContext db) : base(db)
         {
         }
     }

@@ -1,4 +1,4 @@
-﻿using BookReviewing_MVC.Models;
+﻿using BookReviewing_MVC.Data;
 using BookReviewing_MVC.Services.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -27,13 +27,12 @@ namespace BookReviewing_MVC.Services.Repositories
             _dbSet.Remove(entity);
         }
 
-        public async Task<T> Get(Expression<Func<T, bool>>? filter = null,bool tracked = true)
+        public async Task<T> Get(Expression<Func<T, bool>> filter,bool tracked = true)
         {
             IQueryable<T> Query = _dbSet;
-            if (filter != null)
-            {
-                Query = _dbSet.Where(filter);
-            }
+            
+            Query = Query.Where(filter);
+            
             if (!tracked)
             {
                 Query = _dbSet.AsNoTracking();
@@ -46,13 +45,18 @@ namespace BookReviewing_MVC.Services.Repositories
             IQueryable<T> Query = _dbSet;
             if (filter != null)
             {
-                Query = _dbSet.Where(filter);
+                Query = Query.Where(filter);
             }      
             if (!tracked) 
             {
                 Query = _dbSet.AsNoTracking();
             }
             return await Query.ToListAsync();
+        }
+
+        public void Update(T entity)
+        {
+            _dbSet.Update(entity);
         }
     }
 }
