@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BookReviewing_MVC.DTOS;
-using BookReviewing_MVC.Models;
 using BookReviewing_MVC.Services.IRepositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -63,7 +62,6 @@ namespace BookReviewing_MVC.Controllers
             }
             return View(book);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(BookUpdateDTO bookUpdateDTO)

@@ -1,5 +1,4 @@
 using BookReviewing_MVC;
-using BookReviewing_MVC.Models;
 using BookReviewing_MVC.Services.IRepositories;
 using BookReviewing_MVC.Services.Repositories;
 using Microsoft.Extensions.DependencyInjection;
