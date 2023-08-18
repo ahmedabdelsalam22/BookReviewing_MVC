@@ -1,0 +1,45 @@
+﻿@using BookReviewingMVC.Models;
+@model IEnumerable<Country>
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="row m-3">
+    <div class="col-2">
+        <h2>Countries</h2>
+    </div>
+    <div class="col-2 text-end">
+        <a asp-controller="Country" asp-action="Create" class="btn btn-primary">
+            Create
+        </a>
+    </div>
+</div>
+
+<table class="table table-striped" style="width:100%">
+
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Country Name</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach(var n in Model)
+        {
+            <tr>
+                <td>@n.Id</td>
+                <td>@n.Name</td>
+                <td>
+                    <a asp-controller="Country" asp-action="Update" class="btn btn-primary">Update</a>
+                </td>
+                <td>
+                    <a asp-controller="Country" asp-action="Delete" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
