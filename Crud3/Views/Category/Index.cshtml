@@ -1,7 +1,40 @@
-﻿
+﻿@using BookReviewingMVC.Models;
+@model IEnumerable<Category>
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="row">
+    <div class="col-6">
+        <h2>Categories</h2>
+    </div>
+    <div class="col-6 text-end">
+        <a asp-controller="Category" asp-action="Create" class="btn btn-primary">Create</a>
+    </div>
+</div>
 
+<table class="container-fluid" style="width:max-content">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Category Name</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var n in Model)
+        {
+            <tr>
+                <td>@n.Id</td>
+                <td>@n.Name</td>
+                <td>
+                    <a asp-controller="Category" asp-action="Update" class="btn btn-primary">Update</a>
+                </td>
+                <td>
+                    <a asp-controller="Category" asp-action="Delete" class="btn btn-danger">Update</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
