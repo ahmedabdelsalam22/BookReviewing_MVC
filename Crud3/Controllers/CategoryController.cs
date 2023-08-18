@@ -46,6 +46,10 @@ namespace BookReviewing_MVC.Controllers
                 ModelState.AddModelError("CustomError", "categoty already exists");
             }
             Category category = _mapper.Map<Category>(categoryCreateDTO);
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("CustomError","model is't valid");
+            }
             await _unitOfWork.categoryRepository.Create(category);
             await _unitOfWork.save();
             return RedirectToAction("Index");
