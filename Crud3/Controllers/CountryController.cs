@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BookReviewing_MVC.Services.IRepositories;
+using BookReviewingMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookReviewing_MVC.Controllers
@@ -15,7 +16,7 @@ namespace BookReviewing_MVC.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public  IActionResult Index()
         {
             return View();
         }

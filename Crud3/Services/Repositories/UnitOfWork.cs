@@ -11,9 +11,12 @@ namespace BookReviewing_MVC.Services.Repositories
             _context = context;
             bookRepository = new BookRepository(_context);
             categoryRepository = new CategoryRepository(_context);
+            countryRepository = new CountryRepository(_context);
         }
         public IBookRepository bookRepository { get; private set; }
         public ICategoryRepository categoryRepository { get; private set; }
+
+        public ICountryRepository countryRepository { get; private set; }
 
         public async Task save()
         {
