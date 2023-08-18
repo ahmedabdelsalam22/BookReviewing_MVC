@@ -1,0 +1,19 @@
+﻿@using BookReviewingMVC.Models;
+@model Country
+@{
+    ViewData["Title"] = "Create";
+}
+
+<form method="post">
+  <div class="m-3">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" type="text" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+  </div>
+
+  <div class="container m-2">
+      <button asp-controller="Country" asp-action="Create" class="btn btn-primary">
+          Create
+      </button>
+  </div>
+</form>
