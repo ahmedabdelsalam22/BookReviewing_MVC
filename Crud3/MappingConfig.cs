@@ -9,6 +9,7 @@ namespace BookReviewing_MVC
         public MappingConfig()
         {
             CreateMap<BookCreateDTO, Book>();
+            CreateMap<BookUpdateDTO, Book>();
         }
     }
 }
