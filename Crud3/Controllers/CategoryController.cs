@@ -24,7 +24,8 @@ namespace BookReviewing_MVC.Controllers
             {
                 return NotFound();
             }
-            return View(categories);
+            List<CategoryDTO> categoriesDTOS = _mapper.Map<List<CategoryDTO>>(categories);
+            return View(categoriesDTOS);
         }
 
         public IActionResult Create()
@@ -55,19 +56,18 @@ namespace BookReviewing_MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Update(int? categoryId)
+        public async Task<IActionResult> Update(int? id)
         {
-            if (categoryId == 0 || categoryId == null)
+            if (id == 0 || id == null)
             {
                 return NotFound();
             }
-            Category category = await _unitOfWork.categoryRepository.Get(filter: x=>x.Id == categoryId);
+            Category category = await _unitOfWork.categoryRepository.Get(filter: x=>x.Id == id);
             if (category == null)
             {
                 return NotFound();
             }
-            CategoryDTO categoryDTO = _mapper.Map<CategoryDTO>(category);
-            return View(categoryDTO);
+            return View(category);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -79,6 +79,7 @@ namespace BookReviewing_MVC.Controllers
             }
             if (ModelState.IsValid)
             {
+                Category category = _mapper.Map<Category>(categoryUpdateDTO);
                 _unitOfWork.categoryRepository.Update(category);
                 await _unitOfWork.save();
                 return RedirectToAction("Index");
@@ -86,20 +87,20 @@ namespace BookReviewing_MVC.Controllers
             return View(categoryUpdateDTO);
         }
 
-        public async Task<IActionResult> Delete(int? categoryId)
+        public async Task<IActionResult> Delete(int? id)
         {
-            if (categoryId == 0 || categoryId == null)
+            if (id == 0 || id == null)
             {
                 return NotFound();
             }
-            Category category = await _unitOfWork.categoryRepository.Get(filter: x=>x.Id == categoryId);
+            Category category = await _unitOfWork.categoryRepository.Get(filter: x=>x.Id == id);
             if (category == null)
             {
                 return NotFound();
             }
             _unitOfWork.categoryRepository.Delete(category);
             await _unitOfWork.save();
-            return NoContent();
+            return RedirectToAction("Index");
         }
     }
 }

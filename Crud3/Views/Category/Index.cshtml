@@ -1,5 +1,5 @@
-﻿@using BookReviewingMVC.Models;
-@model IEnumerable<Category>
+﻿@using BookReviewing_MVC.DTOS;
+@model IEnumerable<CategoryDTO>
 @{
     ViewData["Title"] = "Index";
 }
@@ -29,10 +29,10 @@
                 <td>@n.Id</td>
                 <td>@n.Name</td>
                 <td width="10%">
-                    <a asp-controller="Category" asp-action="Update" asp-route-categoryId="@n.Id" class="btn btn-primary">Update</a>
+                    <a asp-controller="Category" asp-action="Update" asp-route-id="@n.Id" class="btn btn-primary">Update</a>
                 </td>
                 <td width="10%">
-                    <a asp-controller="Category" asp-action="Delete" asp-route-categoryId="@n.Id" class="btn btn-danger">Delete</a>
+                    <a asp-controller="Category" asp-action="Delete" asp-route-id="@n.Id" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }
