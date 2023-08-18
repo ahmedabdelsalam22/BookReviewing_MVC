@@ -53,6 +53,7 @@ namespace BookReviewing_MVC.Controllers
             {
                 Country countryToDB = _mapper.Map<Country>(countryCreateDTO);
                 await _unitOfWork.countryRepository.Create(countryToDB);
+                await _unitOfWork.save();
                 return RedirectToAction("Index");
             }
             return View(countryCreateDTO);
