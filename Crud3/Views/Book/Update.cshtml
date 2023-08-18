@@ -8,7 +8,7 @@
     <h1>Update</h1>
 </div>
 
-<form method="post">
+<form method="post" asp-action="Update">
     <div class="m-3">
         <label asp-for="Title">Title</label>
         <input type="text" asp-for="Title" class="form-control" />
@@ -27,7 +27,7 @@
 
     <div class="row col-3 m-3">
         <div class="col">
-            <button type="submit" asp-action="Update" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary">
                 Update
             </button>
         </div>
@@ -38,3 +38,9 @@
         </div>
     </div>
 </form>
+
+@section scripts{
+    @{
+        <partial name="_validationScriptsPartial" />
+    }
+}
