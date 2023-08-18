@@ -32,7 +32,7 @@
                     <a asp-controller="Category" asp-action="Update" asp-route-categoryId="@n.Id" class="btn btn-primary">Update</a>
                 </td>
                 <td width="10%">
-                    <a asp-controller="Category" asp-action="Delete" class="btn btn-danger">Update</a>
+                    <a asp-controller="Category" asp-action="Delete" asp-route-categoryId="@n.Id" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
         }

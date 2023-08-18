@@ -78,13 +78,29 @@ namespace BookReviewing_MVC.Controllers
                 return BadRequest("model must't be empty");
             }
             Category category = _mapper.Map<Category>(categoryUpdateDTO);
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 _unitOfWork.categoryRepository.Update(category);
                 await _unitOfWork.save();
                 return RedirectToAction("Index");
             }
             return View(categoryUpdateDTO);
+        }
+
+        public async Task<IActionResult> Delete(int? categoryId)
+        {
+            if (categoryId == 0 || categoryId == null)
+            {
+                return NotFound();
+            }
+            Category category = await _unitOfWork.categoryRepository.Get(filter: x=>x.Id == categoryId);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            _unitOfWork.categoryRepository.Delete(category);
+            await _unitOfWork.save();
+            return NoContent();
         }
     }
 }
