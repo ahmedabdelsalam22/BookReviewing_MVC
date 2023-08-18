@@ -44,7 +44,7 @@ namespace BookReviewing_MVC.Controllers
             Category categoryInDb = await _unitOfWork.categoryRepository.Get(filter: x => x.Name.ToLower() == categoryCreateDTO.Name.ToLower());
             if (categoryInDb != null)
             {
-                ModelState.AddModelError("CustomError", "categoty already exists");
+                return BadRequest("category already exists");
             }
             Category category = _mapper.Map<Category>(categoryCreateDTO);
             if (!ModelState.IsValid)
@@ -67,7 +67,8 @@ namespace BookReviewing_MVC.Controllers
             {
                 return NotFound();
             }
-            return View(category);
+            CategoryDTO categoryDTO = _mapper.Map<CategoryDTO>(category);
+            return View(categoryDTO);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
