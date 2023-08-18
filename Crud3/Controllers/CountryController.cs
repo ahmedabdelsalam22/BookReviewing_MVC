@@ -27,5 +27,35 @@ namespace BookReviewing_MVC.Controllers
             List<CountryDTO> countryDTOs = _mapper.Map<List<CountryDTO>>(countries);
             return View(countryDTOs);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CountryCreateDTO countryCreateDTO)
+        {
+            if (countryCreateDTO == null)
+            {
+                return NotFound();
+            }
+            Country countryIsFound = await _unitOfWork.countryRepository.Get(filter:x=>x.Name.ToLower() == countryCreateDTO.Name.ToLower());
+            if (countryIsFound != null)
+            {
+                return BadRequest("country already exists");
+            }
+            if (!ModelState.IsValid) 
+            {
+                return BadRequest();
+            }
+            if (ModelState.IsValid)
+            {
+                Country countryToDB = _mapper.Map<Country>(countryCreateDTO);
+                await _unitOfWork.countryRepository.Create(countryToDB);
+                return RedirectToAction("Index");
+            }
+            return View(countryCreateDTO);
+        }
     }
 }
