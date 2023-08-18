@@ -11,6 +11,7 @@ namespace BookReviewing_MVC
             CreateMap<BookCreateDTO, Book>();
             CreateMap<BookUpdateDTO, Book>();
             CreateMap<CategoryCreateDTO, Category>();
+            CreateMap<CategoryUpdateDTO, Category>();
             CreateMap<Category, CategoryDTO>().ReverseMap();
         }
     }
