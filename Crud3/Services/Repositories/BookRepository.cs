@@ -15,7 +15,6 @@ namespace BookReviewing_MVC.Services.Repositories
         public Book Update(Book book)
         {
              _context.Books.Update(book);
-            return book;
         }
     }
 }
