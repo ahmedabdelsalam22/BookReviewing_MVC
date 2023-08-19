@@ -27,5 +27,36 @@ namespace BookReviewing_MVC.Controllers
             List<ReviewerDTO> reviewerDTOs = _mapper.Map<List<ReviewerDTO>>(reviewers);
             return View(reviewerDTOs);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(ReviewerCreateDTO reviewerCreateDTO)
+        {
+            if (reviewerCreateDTO == null)
+            {
+                return NotFound();
+            }
+            Reviewer reviewerIsFound = await _unitOfWork.reviewerRepository.Get(filter: x => x.FirstName.ToLower() == reviewerCreateDTO.FirstName.ToLower());
+            if (reviewerIsFound != null)
+            {
+                return BadRequest("reviewer already exists");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            if (ModelState.IsValid)
+            {
+                Reviewer reviewerToDB = _mapper.Map<Reviewer>(reviewerCreateDTO);
+                await _unitOfWork.reviewerRepository.Create(reviewerToDB);
+                await _unitOfWork.save();
+                return RedirectToAction("Index");
+            }
+            return View(reviewerCreateDTO);
+        }
     }
 }
