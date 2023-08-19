@@ -90,5 +90,18 @@ namespace BookReviewing_MVC.Controllers
             }
             return View(countryUpdateDTO);
         }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == 0 || id == null)
+            {
+                return BadRequest();
+            }
+            Country country = await _unitOfWork.countryRepository.Get(filter: x => x.Id == id);
+
+            _unitOfWork.countryRepository.Delete(country);
+            await _unitOfWork.save();
+            return NoContent();
+        }
     }
 }
