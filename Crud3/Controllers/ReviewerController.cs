@@ -89,5 +89,18 @@ namespace BookReviewing_MVC.Controllers
             }
             return View(reviewerUpdateDTO);
         }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == 0)
+            {
+                ModelState.AddModelError("CustomError", "this reviewer not found");
+            }
+            Reviewer reviewer = await _unitOfWork.reviewerRepository.Get(filter: x => x.Id == id);
+         
+            _unitOfWork.reviewerRepository.Delete(reviewer);
+            await _unitOfWork.save();
+            return NoContent();
+        }
     }
 }
