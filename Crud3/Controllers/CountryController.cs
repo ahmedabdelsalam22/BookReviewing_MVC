@@ -95,13 +95,16 @@ namespace BookReviewing_MVC.Controllers
         {
             if (id == 0 || id == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-            Country country = await _unitOfWork.countryRepository.Get(filter: x => x.Id == id);
-
+             Country country = await _unitOfWork.countryRepository.Get(filter: x => x.Id == id);
+            if (country == null)
+            {
+                return NotFound();
+            }
             _unitOfWork.countryRepository.Delete(country);
             await _unitOfWork.save();
-            return NoContent();
+            return RedirectToAction("Index");
         }
     }
 }
