@@ -58,5 +58,36 @@ namespace BookReviewing_MVC.Controllers
             }
             return View(reviewerCreateDTO);
         }
+
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == 0 || id == null)
+            {
+                return NotFound();
+            }
+            Reviewer reviewer = await _unitOfWork.reviewerRepository.Get(filter: x => x.Id == id);
+            if (reviewer == null)
+            {
+                ModelState.AddModelError("CustomError", "this reviewer not found!");
+            }
+            return View(reviewer);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(ReviewerUpdateDTO reviewerUpdateDTO)
+        {
+            if (!ModelState.IsValid || reviewerUpdateDTO == null)
+            {
+                ModelState.AddModelError("CustomError", "reviewer fields not valid");
+            }
+            if (ModelState.IsValid)
+            {
+                Reviewer reviewer = _mapper.Map<Reviewer>(reviewerUpdateDTO);
+                _unitOfWork.reviewerRepository.Update(reviewer);
+                await _unitOfWork.save();
+                return RedirectToAction("Index");
+            }
+            return View(reviewerUpdateDTO);
+        }
     }
 }

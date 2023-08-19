@@ -18,6 +18,7 @@ namespace BookReviewing_MVC
             CreateMap<CountryUpdateDTO, Country>();
             CreateMap<Reviewer, ReviewerDTO>();
             CreateMap<ReviewerCreateDTO, Reviewer>();
+            CreateMap<ReviewerUpdateDTO, Reviewer>();
         }
     }
 }
