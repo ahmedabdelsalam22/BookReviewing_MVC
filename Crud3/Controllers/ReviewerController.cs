@@ -92,7 +92,7 @@ namespace BookReviewing_MVC.Controllers
 
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == 0)
+            if (id == 0 || id == null)
             {
                 ModelState.AddModelError("CustomError", "this reviewer not found");
             }
@@ -100,7 +100,7 @@ namespace BookReviewing_MVC.Controllers
          
             _unitOfWork.reviewerRepository.Delete(reviewer);
             await _unitOfWork.save();
-            return NoContent();
+            return RedirectToAction("Index");
         }
     }
 }
