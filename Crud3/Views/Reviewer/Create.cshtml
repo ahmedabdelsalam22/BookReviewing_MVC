@@ -1,0 +1,43 @@
+﻿@using BookReviewing_MVC.DTOS;
+@model ReviewerCreateDTO
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="m-3">
+    <h2>Create Reviewer</h2>
+</div>
+
+<form method="post">
+    <div class="m-3">
+        <label asp-for="FirstName">FirstName</label>
+        <input asp-for="FirstName" type="text" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="m-3">
+        <label asp-for="LastName">LastName</label>
+        <input asp-for="LastName" type="text" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="row col-2">
+        <div class="col m-3">
+            <button type="submit" class="btn btn-primary">
+                Create
+            </button>
+        </div>
+        <div class="col m-3">
+            <a asp-controller="Reviewer" asp-action="Index" class="btn btn-secondary">
+                Back To List
+            </a>
+        </div>
+    </div>
+
+</form>
+
+@section scripts{
+    @{
+        <partial name="_validationScriptsPartial" />
+    }
+}
+
