@@ -1,0 +1,54 @@
+﻿@using BookReviewingMVC.Models;
+@model Review
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<div class="m-3">
+    <h2>Create Review</h2>
+</div>
+
+<form method="post">
+    <div class="m-3">
+        <label asp-for="HeadLine">HeadLine</label>
+        <input asp-for="HeadLine" type="text" class="form-control" />
+        <span asp-validation-for="HeadLine" class="text-danger"></span>
+    </div>
+    <div class="m-3">
+        <label asp-for="ReviewText">ReviewText</label>
+        <input asp-for="ReviewText" type="text" class="form-control" />
+        <span asp-validation-for="ReviewText" class="text-danger"></span>
+    </div>
+    <div class="m-3">
+        <label asp-for="Rating">Rating</label>
+        <input type="number" asp-for="Rating" class="form-control"/>
+        <span asp-validation-for="Rating" class="text-danger"></span>
+    </div>
+    <div class="m-3">
+        <label asp-for="Book.Title">Book</label>
+        <input asp-for="Book.Title" type="text" class="form-control" />
+        <span asp-validation-for="Book.Title" class="text-danger"></span>
+    </div>
+
+    <div class="row col-2">
+        <div class="col m-3">
+            <button type="submit" class="btn btn-primary">
+                Create
+            </button>
+        </div>
+        <div class="col m-3">
+            <a asp-controller="Review" asp-action="Index" class="btn btn-secondary">
+                Back To List
+            </a>
+        </div>
+    </div>
+
+</form>
+
+@section scripts{
+    @{
+        <partial name="_validationScriptsPartial" />
+    }
+}
+
