@@ -50,13 +50,18 @@ namespace BookReviewing_MVC.Controllers
             }
             // related entites 
             // when create new review .. the review book we will added should be found in database.. 
-            Book book = await _unitOfWork.bookRepository.Get(filter:x=>x.Title.ToLower() == review.Book.Title.ToLower());
+            Book? book = await _unitOfWork.bookRepository.Get(filter:x=>x.Title.ToLower() == review.Book.Title.ToLower());
             if (book == null)
             {
                 ModelState.AddModelError("CustomError", "no book exists with this title");
             }
+            Reviewer? reviewer = await _unitOfWork.reviewerRepository.Get(filter:x=>x.FirstName.ToLower() == review.Reviewer.FirstName.ToLower());
+            if (reviewer == null)
+            {
+                ModelState.AddModelError("CustomError", "no reviewer exists with this firstname");
+            }
             review.Book = book;
-            review.Reviewer = null;
+            review.Reviewer = reviewer;
 
             await _unitOfWork.reviewRepository.Create(review);
             await _unitOfWork.save();
