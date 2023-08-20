@@ -48,32 +48,10 @@ namespace BookReviewing_MVC.Services.Repositories
                 }
             }
 
-
             return await Query.FirstOrDefaultAsync();
         }
 
         public async Task<List<T>> GetAll(Expression<Func<T, bool>>? filter = null, bool tracked = true,
-            string? includeProperties = null)
-        {
-            IQueryable<T> Query = _dbSet;
-            if (filter != null)
-            {
-                Query = Query.Where(filter);
-            }      
-            if (!tracked) 
-            {
-                Query = _dbSet.AsNoTracking();
-            }
-            if (includeProperties != null)
-            {
-                foreach (var includeProp1 in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    Query = Query.Include(includeProp1);
-                }
-            }         
-            return await Query.ToListAsync();
-        }
-        public async Task<List<T>> GetAllWithMultipleInclue(Expression<Func<T, bool>>? filter = null, bool tracked = true,
              string[] includes = null)
         {
             IQueryable<T> Query = _dbSet;
