@@ -23,7 +23,7 @@
 
     <div class="m-3">
         <label asp-for="Country.Name">Country</label>
-        <input asp-for="Country.Name" type="text" class="form-control" />
+        <select asp-for="Country.Name" asp-items="@ViewBag.countriesListItem"></select>
         <span asp-validation-for="Country.Name" class="text-danger"></span>
     </div>
 

@@ -21,6 +21,7 @@ namespace BookReviewing_MVC.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<BookCategory>()
                         .HasKey(bc => new { bc.BookId, bc.CategoryId });
             modelBuilder.Entity<BookCategory>()

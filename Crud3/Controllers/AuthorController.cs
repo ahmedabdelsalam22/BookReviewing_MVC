@@ -31,7 +31,14 @@ namespace BookReviewing_MVC.Controllers
         {
             List<Country> countries = await _unitOfWork.countryRepository.GetAll();
 
-            ViewBag.countriesListItem = new SelectList(countries, "Id", "Name");
+            List<string> countryList = new List<string>();
+
+            foreach (var country in countries)
+            {
+                countryList.Add(country.Name);
+            }
+
+            ViewBag.countriesListItem = new SelectList(countryList);
 
             return View();
         }
@@ -60,6 +67,7 @@ namespace BookReviewing_MVC.Controllers
             {
                 return NotFound("country does't exists");
             }
+
             author.Country = country;
             
             await _unitOfWork.authorRepository.Create(author);
