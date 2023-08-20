@@ -21,7 +21,7 @@ namespace BookReviewing_MVC.Services.Repositories
 
         public async Task Create(T entity)
         {
-           await _dbSet.AddAsync(entity);
+            await _dbSet.AddAsync(entity);
         }
 
         public void Delete(T entity)
@@ -29,22 +29,22 @@ namespace BookReviewing_MVC.Services.Repositories
             _dbSet.Remove(entity);
         }
 
-        public async Task<T> Get(Expression<Func<T, bool>> filter,bool tracked = true, string? includeProperties = null)
+        public async Task<T> Get(Expression<Func<T, bool>> filter, bool tracked = true, string[] includes = null)
         {
             IQueryable<T> Query = _dbSet;
-            
+
             Query = Query.Where(filter);
-            
+
             if (!tracked)
             {
                 Query = _dbSet.AsNoTracking();
             }
 
-            if (includeProperties != null)
+            if (includes != null)
             {
-                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (string include in includes)
                 {
-                    Query = Query.Include(includeProp);
+                    Query = Query.Include(include);
                 }
             }
 
@@ -52,7 +52,7 @@ namespace BookReviewing_MVC.Services.Repositories
         }
 
         public async Task<List<T>> GetAll(Expression<Func<T, bool>>? filter = null, bool tracked = true,
-             string[] includes = null)
+            string[] includes = null)
         {
             IQueryable<T> Query = _dbSet;
             if (filter != null)
@@ -67,7 +67,7 @@ namespace BookReviewing_MVC.Services.Repositories
             {
                 foreach (var include in includes)
                 {
-                    Query = Query.Include(include);
+                    Query = Query.Include(include); 
                 }
             }
             return await Query.ToListAsync();
