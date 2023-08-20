@@ -7,6 +7,8 @@ namespace BookReviewing_MVC.Services.IRepositories
     {
         Task<List<T>> GetAll(Expression<Func<T,bool>>? filter = null, bool tracked = true, string? includeProperties = null);
         Task<T> Get(Expression<Func<T, bool>> filter, bool tracked = true, string? includeProperties = null);
+        Task<List<T>> GetAllWithMultipleInclue(Expression<Func<T, bool>>? filter = null, bool tracked = true,
+             string[] includes = null);
         Task Create(T entity);
         void Delete(T entity);
         void Update(T entity);
