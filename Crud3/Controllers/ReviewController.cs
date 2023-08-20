@@ -9,14 +9,10 @@ namespace BookReviewing_MVC.Controllers
     public class ReviewController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private IMapper _mapper;
-
-        public ReviewController(IUnitOfWork unitOfWork, IMapper mapper)
+        public ReviewController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
         }
-
         public async Task<IActionResult> Index()
         {
             IEnumerable<Review> reviews = await _unitOfWork.reviewRepository.GetAll(includes: new[] {"Book","Reviewer"});
@@ -95,7 +91,7 @@ namespace BookReviewing_MVC.Controllers
 
             foreach (var reviewer in reviewers)
             {
-                booksList.Add(reviewer.FirstName);
+                reviewersList.Add(reviewer.FirstName);
             }
             ViewBag.reviewerListItem = new SelectList(reviewersList);
 
