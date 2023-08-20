@@ -25,5 +25,40 @@ namespace BookReviewing_MVC.Controllers
             }
             return View(authors);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Author author)
+        {
+            if (author == null)
+            {
+                return BadRequest();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("please fill all data");
+            }
+            Author authorIsFound = await _unitOfWork.authorRepository.Get(filter: x=>x.FirstName.ToLower() == author.FirstName.ToLower());
+            if(authorIsFound != null)
+            {
+                return BadRequest("this author arleady exists");
+            }
+
+            // when create new author .. the author country we will added should be found in database.. 
+            Country country = await _unitOfWork.countryRepository.Get(filter: x=>x.Name.ToLower() == author.Country.Name.ToLower());
+            if (country == null)
+            {
+                return NotFound("country does't exists");
+            }
+            author.Country = country;
+
+            await _unitOfWork.authorRepository.Create(author);
+            await _unitOfWork.save();
+            return RedirectToAction("Index");
+        }
     }
 }
