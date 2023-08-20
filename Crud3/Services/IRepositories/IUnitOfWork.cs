@@ -6,6 +6,7 @@
         public ICategoryRepository categoryRepository { get; }
         public ICountryRepository countryRepository { get; }
         public IReviewerRepository reviewerRepository { get; }
+        public IAuthorRepository authorRepository { get; }
         Task save();
     }
 }
