@@ -123,5 +123,17 @@ namespace BookReviewing_MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == 0 || id == null)
+            {
+                return BadRequest();
+            }
+            Review review = await _unitOfWork.reviewRepository.Get(filter: x => x.Id == id);
+
+            _unitOfWork.reviewRepository.Delete(review);
+            await _unitOfWork.save();
+            return RedirectToAction("Index");
+        }
     }
 }
