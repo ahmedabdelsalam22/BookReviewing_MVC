@@ -129,7 +129,7 @@ namespace BookReviewing_MVC.Controllers
                 return BadRequest();
             }
             Author author = await _unitOfWork.authorRepository.Get(filter:x=>x.Id == id);
-
+            
             _unitOfWork.authorRepository.Delete(author);
             await _unitOfWork.save();
             return RedirectToAction("Index");

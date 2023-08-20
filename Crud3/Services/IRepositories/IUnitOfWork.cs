@@ -7,6 +7,7 @@
         public ICountryRepository countryRepository { get; }
         public IReviewerRepository reviewerRepository { get; }
         public IAuthorRepository authorRepository { get; }
+        public IReviewRepository reviewRepository { get; }
         Task save();
     }
 }
