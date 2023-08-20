@@ -73,5 +73,41 @@ namespace BookReviewing_MVC.Controllers
             await _unitOfWork.save();
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Update(int id)
+        {
+            Author author = await _unitOfWork.authorRepository.Get(filter:x=>x.Id == id ,includeProperties:"Country");
+            if (author == null)
+            {
+                return BadRequest();
+            }
+
+            return View(author);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(Author author)
+        {
+            if (author == null) 
+            {
+                return BadRequest();
+            }
+            if (!ModelState.IsValid) 
+            {
+                return BadRequest();
+            }
+            // when update author .. the author country we will added should be found in database.. 
+            Country country = await _unitOfWork.countryRepository.Get(filter: x => x.Name.ToLower() == author.Country.Name.ToLower());
+            if (country == null)
+            {
+                return NotFound("country does't exists");
+            }
+
+            author.Country = country;
+
+            _unitOfWork.authorRepository.Update(author);
+            await _unitOfWork.save();
+            return RedirectToAction("Index");
+        }
     }
 }
