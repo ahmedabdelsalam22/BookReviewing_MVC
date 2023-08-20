@@ -70,7 +70,6 @@ namespace BookReviewing_MVC.Services.Repositories
             }
             return await Query.ToListAsync();
         }
-
         public void Update(T entity)
         {
             _dbSet.Update(entity);

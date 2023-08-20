@@ -48,7 +48,6 @@ namespace BookReviewing_MVC.Controllers
             {
                 return BadRequest("review already exists");
             }
-
             // related entites 
             // when create new review .. the review book we will added should be found in database.. 
             Book book = await _unitOfWork.bookRepository.Get(filter:x=>x.Title.ToLower() == review.Book.Title.ToLower());
