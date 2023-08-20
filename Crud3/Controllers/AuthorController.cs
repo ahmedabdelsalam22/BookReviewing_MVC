@@ -60,7 +60,6 @@ namespace BookReviewing_MVC.Controllers
                 return BadRequest("this author arleady exists");
             }
 
-            // option 1 - we added country manualy ..
             // when create new author .. the author country we will added should be found in database.. 
             Country country = await _unitOfWork.countryRepository.Get(filter: x=>x.Name.ToLower() == author.Country.Name.ToLower());
             if (country == null)
