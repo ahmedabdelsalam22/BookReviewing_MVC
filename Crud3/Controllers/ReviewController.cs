@@ -18,7 +18,7 @@ namespace BookReviewing_MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Review> reviews = await _unitOfWork.reviewRepository.GetAllWithMultipleInclue(includes: new[] {"Book","Reviewer"});
+            IEnumerable<Review> reviews = await _unitOfWork.reviewRepository.GetAll(includes: new[] {"Book","Reviewer"});
             if (reviews == null)
             {
                 return BadRequest();
