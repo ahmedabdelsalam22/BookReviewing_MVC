@@ -2,6 +2,7 @@
 using BookReviewing_MVC.Services.IRepositories;
 using BookReviewingMVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookReviewing_MVC.Controllers
 {
@@ -26,8 +27,19 @@ namespace BookReviewing_MVC.Controllers
             return View(authors);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            List<Country> countries = await _unitOfWork.countryRepository.GetAll();
+
+            List<string> countryList = new List<string>();
+
+            foreach (var country in countries)
+            {
+                countryList.Add(country.Name);
+            }
+
+            ViewBag.countriesListItem = new SelectList(countryList);
+
             return View();
         }
         [HttpPost]
@@ -48,14 +60,16 @@ namespace BookReviewing_MVC.Controllers
                 return BadRequest("this author arleady exists");
             }
 
+            // option 1 - we added country manualy ..
             // when create new author .. the author country we will added should be found in database.. 
             Country country = await _unitOfWork.countryRepository.Get(filter: x=>x.Name.ToLower() == author.Country.Name.ToLower());
             if (country == null)
             {
                 return NotFound("country does't exists");
             }
-            author.Country = country;
 
+            author.Country = country;
+            
             await _unitOfWork.authorRepository.Create(author);
             await _unitOfWork.save();
             return RedirectToAction("Index");
