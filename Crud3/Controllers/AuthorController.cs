@@ -82,6 +82,18 @@ namespace BookReviewing_MVC.Controllers
                 return BadRequest();
             }
 
+            List<Country> countries = await _unitOfWork.countryRepository.GetAll();
+
+            List<string> countryList = new List<string>();
+
+            foreach (var country in countries)
+            {
+                countryList.Add(country.Name);
+            }
+
+            ViewBag.countriesListItem = new SelectList(countryList);
+
+
             return View(author);
         }
         [HttpPost]
