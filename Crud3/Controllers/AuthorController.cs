@@ -18,7 +18,7 @@ namespace BookReviewing_MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Author> authors = await _unitOfWork.authorRepository.GetAll();
+            IEnumerable<Author> authors = await _unitOfWork.authorRepository.GetAll(includeProperties: "Country");
             if (authors == null)
             {
                 return NotFound();
