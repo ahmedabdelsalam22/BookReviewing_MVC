@@ -16,7 +16,6 @@ namespace BookReviewing_MVC.Services.Repositories
         }
         public IBookRepository bookRepository { get; private set; }
         public ICategoryRepository categoryRepository { get; private set; }
-
         public ICountryRepository countryRepository { get; private set; }
         public IReviewerRepository reviewerRepository { get; private set; }
 
