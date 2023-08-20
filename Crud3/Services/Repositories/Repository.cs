@@ -3,6 +3,7 @@ using BookReviewing_MVC.Services.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace BookReviewing_MVC.Services.Repositories
 {
@@ -27,7 +28,7 @@ namespace BookReviewing_MVC.Services.Repositories
             _dbSet.Remove(entity);
         }
 
-        public async Task<T> Get(Expression<Func<T, bool>> filter,bool tracked = true)
+        public async Task<T> Get(Expression<Func<T, bool>> filter,bool tracked = true, string? includeProperties = null)
         {
             IQueryable<T> Query = _dbSet;
             
@@ -37,10 +38,19 @@ namespace BookReviewing_MVC.Services.Repositories
             {
                 Query = _dbSet.AsNoTracking();
             }
+
+            if (includeProperties != null)
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    Query = Query.Include(includeProp);
+                }
+            }
+
             return await Query.FirstOrDefaultAsync();
         }
 
-        public async Task<List<T>> GetAll(Expression<Func<T, bool>>? filter = null, bool tracked = true)
+        public async Task<List<T>> GetAll(Expression<Func<T, bool>>? filter = null, bool tracked = true, string? includeProperties = null)
         {
             IQueryable<T> Query = _dbSet;
             if (filter != null)
@@ -50,6 +60,13 @@ namespace BookReviewing_MVC.Services.Repositories
             if (!tracked) 
             {
                 Query = _dbSet.AsNoTracking();
+            }
+            if (includeProperties != null)
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    Query = Query.Include(includeProp);
+                }
             }
             return await Query.ToListAsync();
         }
