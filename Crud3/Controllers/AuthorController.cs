@@ -74,8 +74,12 @@ namespace BookReviewing_MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Update(int id)
+        public async Task<IActionResult> Update(int? id)
         {
+            if(id == 0|| id == null)
+            {
+                return BadRequest();
+            }
             Author author = await _unitOfWork.authorRepository.Get(filter:x=>x.Id == id, includes: new[] { "Country" });
             if (author == null)
             {

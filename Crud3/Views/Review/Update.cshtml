@@ -1,0 +1,54 @@
+﻿@using BookReviewingMVC.Models;
+@model Review
+@{
+    ViewData["Title"] = "Update";
+}
+
+
+<form method="post" asp-action="Update">
+    <div class="m-3">
+        <label asp-for="HeadLine">HeadLine</label>
+        <input asp-for="HeadLine" type="text" class="form-control" />
+        <span asp-validation-for="HeadLine" class="text-danger"></span>
+    </div>
+    <div class="m-3">
+        <label asp-for="ReviewText">ReviewText</label>
+        <input asp-for="ReviewText" type="text" class="form-control" />
+        <span asp-validation-for="ReviewText" class="text-danger"></span>
+    </div>
+    <div class="m-3">
+        <label asp-for="Rating">Rating</label>
+        <input type="number" asp-for="Rating" class="form-control" />
+        <span asp-validation-for="Rating" class="text-danger"></span>
+    </div>
+    <div class="m-3">
+        <label asp-for="Book.Title">Book</label>
+        <select select asp-for="Book.Title" asp-items="@ViewBag.bookListItem" style="width:100%"></select>
+    </div>
+    <div class="m-3">
+        <label asp-for="Reviewer.FirstName">Reviewer</label>
+        <select asp-for="Reviewer.FirstName" asp-items="@ViewBag.reviewerListItem" style="width:100%"></select>
+    </div>
+
+    <div class="row col-2">
+        <div class="col m-3">
+            <button type="submit" class="btn btn-primary">
+                Update
+            </button>
+        </div>
+        <div class="col m-3">
+            <a asp-controller="Review" asp-action="Index" class="btn btn-secondary">
+                Back To List
+            </a>
+        </div>
+    </div>
+
+</form>
+
+@section scripts{
+    @{
+        <partial name="_validationScriptsPartial" />
+    }
+}
+
+
