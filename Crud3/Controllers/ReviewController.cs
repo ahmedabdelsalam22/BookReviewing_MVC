@@ -101,7 +101,7 @@ namespace BookReviewing_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(Review review) 
         {
-            if (review == null || !ModelState.IsValid) 
+            if (review == null) 
             {
                 return BadRequest();
             }
