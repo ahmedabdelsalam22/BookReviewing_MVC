@@ -25,6 +25,7 @@
             <th>ReviewText</th>
             <th>Rating</th>
             <th>Book</th>
+            <th>Reviewer</th>
             <th>Update</th>
             <th>Delete</th>
         </tr>
@@ -39,6 +40,7 @@
                 <td>@n.ReviewText</td>
                 <td>@n.Rating</td>
                 <td>@n.Book.Title</td>
+                <td>@n.Reviewer.FirstName @n.Reviewer.LastName</td>
                 <td width="10%">
                     <a asp-controller="Review" asp-action="Update" asp-route-id="@n.Id" class="btn btn-primary">Update</a>
                 </td>

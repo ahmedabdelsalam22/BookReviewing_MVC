@@ -18,7 +18,7 @@ namespace BookReviewing_MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable<Review> reviews = await _unitOfWork.reviewRepository.GetAll(includeProperties: "Book");
+            IEnumerable<Review> reviews = await _unitOfWork.reviewRepository.GetAllWithMultipleInclue(includes: new[] {"Book","Reviewer"});
             if (reviews == null)
             {
                 return BadRequest();
@@ -41,21 +41,22 @@ namespace BookReviewing_MVC.Controllers
             }
             if (!ModelState.IsValid)
             {
-                return BadRequest("not valid"); 
+                ModelState.AddModelError("CustomError","not valid");
             }
             Review isReviewFound = await _unitOfWork.reviewRepository.Get(filter:x=>x.ReviewText.ToLower() ==review.ReviewText.ToLower());
             if (isReviewFound != null) 
             {
-                return BadRequest("review already exists");
+                ModelState.AddModelError("CustomError","review already exists");
             }
             // related entites 
             // when create new review .. the review book we will added should be found in database.. 
             Book book = await _unitOfWork.bookRepository.Get(filter:x=>x.Title.ToLower() == review.Book.Title.ToLower());
             if (book == null)
             {
-                return BadRequest("no book exists with this title");
+                ModelState.AddModelError("CustomError", "no book exists with this title");
             }
             review.Book = book;
+            review.Reviewer = null;
 
             await _unitOfWork.reviewRepository.Create(review);
             await _unitOfWork.save();

@@ -1,6 +1,7 @@
 ﻿using BookReviewing_MVC.Data;
 using BookReviewing_MVC.Services.IRepositories;
 using Microsoft.EntityFrameworkCore;
+using NuGet.ProjectModel;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -47,10 +48,12 @@ namespace BookReviewing_MVC.Services.Repositories
                 }
             }
 
+
             return await Query.FirstOrDefaultAsync();
         }
 
-        public async Task<List<T>> GetAll(Expression<Func<T, bool>>? filter = null, bool tracked = true, string? includeProperties = null)
+        public async Task<List<T>> GetAll(Expression<Func<T, bool>>? filter = null, bool tracked = true,
+            string? includeProperties = null)
         {
             IQueryable<T> Query = _dbSet;
             if (filter != null)
@@ -63,9 +66,30 @@ namespace BookReviewing_MVC.Services.Repositories
             }
             if (includeProperties != null)
             {
-                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProp1 in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    Query = Query.Include(includeProp);
+                    Query = Query.Include(includeProp1);
+                }
+            }         
+            return await Query.ToListAsync();
+        }
+        public async Task<List<T>> GetAllWithMultipleInclue(Expression<Func<T, bool>>? filter = null, bool tracked = true,
+             string[] includes = null)
+        {
+            IQueryable<T> Query = _dbSet;
+            if (filter != null)
+            {
+                Query = Query.Where(filter);
+            }
+            if (!tracked)
+            {
+                Query = _dbSet.AsNoTracking();
+            }
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    Query = Query.Include(include);
                 }
             }
             return await Query.ToListAsync();
