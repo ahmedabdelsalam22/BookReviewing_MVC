@@ -13,13 +13,13 @@ namespace BookReviewing_MVC.Services.Repositories
             categoryRepository = new CategoryRepository(_context);
             countryRepository = new CountryRepository(_context);
             reviewerRepository = new ReviewerRepository(_context);
+            authorRepository = new AuthorRepository(_context);
         }
         public IBookRepository bookRepository { get; private set; }
         public ICategoryRepository categoryRepository { get; private set; }
-
         public ICountryRepository countryRepository { get; private set; }
         public IReviewerRepository reviewerRepository { get; private set; }
-
+        public IAuthorRepository authorRepository { get; private set; }
         public async Task save()
         {
             await _context.SaveChangesAsync();
