@@ -2,6 +2,7 @@
 using BookReviewing_MVC.Services.IRepositories;
 using BookReviewingMVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BookReviewing_MVC.Controllers
 {
@@ -68,6 +69,63 @@ namespace BookReviewing_MVC.Controllers
             return RedirectToAction("Index");
         }
 
-         
+        public async Task<IActionResult> Update(int? id)
+        {
+            if (id == 0 || id == null) 
+            {
+                return NotFound();
+            }
+            Review review = await _unitOfWork.reviewRepository.Get(filter:x=>x.Id == id,includes: new[] {"Book","Reviewer"});
+
+            // getting all books related data and display in view
+            List<Book> books = await _unitOfWork.bookRepository.GetAll();
+
+            List<string> booksList = new List<string>();
+
+            foreach (var book in books)
+            {
+                booksList.Add(book.Title);
+            }
+            ViewBag.bookListItem = new SelectList(booksList);
+
+            // getting all reviewers related data and display in view
+            List<Reviewer> reviewers = await _unitOfWork.reviewerRepository.GetAll();
+
+            List<string> reviewersList = new List<string>();
+
+            foreach (var reviewer in reviewers)
+            {
+                booksList.Add(reviewer.FirstName);
+            }
+            ViewBag.reviewerListItem = new SelectList(reviewersList);
+
+            return View(review);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(Review review) 
+        {
+            if (review == null || !ModelState.IsValid) 
+            {
+                return BadRequest();
+            }
+            Book? book = await _unitOfWork.bookRepository.Get(filter: x => x.Title.ToLower() == review.Book.Title.ToLower());
+            if (book == null)
+            {
+                ModelState.AddModelError("CustomError", "no book exists with this title");
+            }
+            Reviewer? reviewer = await _unitOfWork.reviewerRepository.Get(filter: x => x.FirstName.ToLower() == review.Reviewer.FirstName.ToLower());
+            if (reviewer == null)
+            {
+                ModelState.AddModelError("CustomError", "no reviewer exists with this firstname");
+            }
+            review.Book = book;
+            review.Reviewer = reviewer;
+
+            _unitOfWork.reviewRepository.Update(review);
+            await _unitOfWork.save();
+            return RedirectToAction("Index");
+        }
+
     }
 }

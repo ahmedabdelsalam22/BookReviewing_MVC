@@ -76,7 +76,7 @@ namespace BookReviewing_MVC.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
-            Author author = await _unitOfWork.authorRepository.Get(filter:x=>x.Id == id ,includeProperties:"Country");
+            Author author = await _unitOfWork.authorRepository.Get(filter:x=>x.Id == id, includes: new[] { "Country" });
             if (author == null)
             {
                 return BadRequest();
