@@ -75,6 +75,11 @@ namespace BookReviewing_MVC.Areas.Identity.Pages.Account
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
+            
+            [Display(Name = "Name")]
+            public string Name { get; set; }
+            
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
