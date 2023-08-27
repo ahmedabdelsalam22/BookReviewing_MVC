@@ -3,8 +3,6 @@ using BookReviewing_MVC.Data;
 using BookReviewing_MVC.Services.IRepositories;
 using BookReviewing_MVC.Services.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Identity;
 using BookReviewing_MVC.Models;
 
 var builder = WebApplication.CreateBuilder(args);
