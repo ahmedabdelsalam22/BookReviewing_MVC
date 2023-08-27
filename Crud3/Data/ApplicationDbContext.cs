@@ -1,6 +1,5 @@
 ﻿using BookReviewing_MVC.Models;
 using BookReviewingMVC.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
