@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity;
+<!DOCTYPE html>
+
+@inject SignInManager<ApplicationUser> _signInManager;
+@inject UserManager<ApplicationUser> _userManager;
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -21,8 +26,11 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         
-                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
+                        @if (_signInManager.IsSignedIn(User))
+                        {
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
 
+ RepositoryPattern
                          
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Index">Books</a>
@@ -44,8 +52,38 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="Index">Authors</a>
                         </li>
 
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Index">Books</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Categories</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Country" asp-action="Index">Countries</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Review" asp-action="Index">Reviews</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Review" asp-action="Index">Reviews</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Reviewer" asp-action="Index">Reviewers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="Index">Authors</a>
+                            </li>
+                        }else
+                        {
+                            
+                        }
+ master
+
                     </ul>
                 </div>
+            </div>
+            <div class="text-end">
+                <partial name="_LoginPartial"/>
             </div>
         </nav>
     </header>
