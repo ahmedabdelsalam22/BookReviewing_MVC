@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity;
+<!DOCTYPE html>
+
+@inject SignInManager<IdentityUser> _signInManager;
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,30 +24,39 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        
-                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Contents</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" asp-controller="Book" asp-action="Index">Books</a>
-                                <a class="dropdown-item" asp-controller="Category" asp-action="Index">Categories</a>
-                                <a class="dropdown-item" asp-controller="Country" asp-action="Index">Countries</a>
-                                <a class="dropdown-item" asp-controller="Reviewer" asp-action="Index">Reviewers</a>
-                                <a class="dropdown-item" asp-controller="Author" asp-action="Index">Authors</a>
-                                <a class="dropdown-item" asp-controller="Review" asp-action="Index">Reviews</a>
-                            </div>
+                        @if (_signInManager.IsSignedIn(User))
+                        {
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Book" asp-action="Index">Books</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Categories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Country" asp-action="Index">Countries</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Review" asp-action="Index">Reviews</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Reviewer" asp-action="Index">Reviewers</a>
-                        </li>  
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Author" asp-action="Index">Authors</a>
-                        </li>
+                            </li>
 
+                        }else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                            </li>
+                        }
+                       
                     </ul>
                 </div>
             </div>
