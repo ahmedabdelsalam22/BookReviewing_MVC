@@ -1,4 +1,5 @@
 ﻿@using BookReviewing_MVC.DTOS;
+@using BookReviewing_MVC.Utilities;
 @model IEnumerable<ReviewerDTO>
 @{
     ViewData["Title"] = "Index";
@@ -9,11 +10,14 @@
     <div class="col-6">
         <h2>Reviewers</h2>
     </div>
-    <div class="col-6 text-end">
-        <a asp-controller="Reviewer" asp-action="Create" class="btn btn-primary">
+    @if (User.IsInRole(SD.Role_Admin))
+    {
+        <div class="col-6 text-end">
+            <a asp-controller="Reviewer" asp-action="Create" class="btn btn-primary">
             Create
         </a>
     </div>
+    }
 </div>
 
 <table class="table table-striped" style="width:100%">
@@ -23,8 +27,11 @@
             <th>Id</th>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Update</th>
-            <th>Delete</th>
+            @if (User.IsInRole(SD.Role_Admin))
+            {
+                <th>Update</th>
+                <th>Delete</th>
+            }
         </tr>
     </thead>
 
@@ -35,12 +42,15 @@
                 <td>@n.Id</td>
                 <td>@n.FirstName</td>
                 <td>@n.LastName</td>
-                <td width="10%">
-                    <a asp-controller="Reviewer" asp-action="Update" asp-route-id="@n.Id" class="btn btn-primary">Update</a>
+                @if (User.IsInRole(SD.Role_Admin))
+                {
+                    <td width="10%">
+                        <a asp-controller="Reviewer" asp-action="Update" asp-route-id="@n.Id" class="btn btn-primary">Update</a>
+                    </td>
+                    <td width="10%">
+                        <a asp-controller="Reviewer" asp-action="Delete" asp-route-id="@n.Id" class="btn btn-danger">Delete</a>
                 </td>
-                <td width="10%">
-                    <a asp-controller="Reviewer" asp-action="Delete" asp-route-id="@n.Id" class="btn btn-danger">Delete</a>
-                </td>
+                }
             </tr>
         }
     </tbody>

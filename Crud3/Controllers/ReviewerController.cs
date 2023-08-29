@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using BookReviewing_MVC.DTOS;
 using BookReviewing_MVC.Services.IRepositories;
+using BookReviewing_MVC.Utilities;
 using BookReviewingMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookReviewing_MVC.Controllers
 {
+    [Authorize]
     public class ReviewerController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -16,7 +19,7 @@ namespace BookReviewing_MVC.Controllers
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             IEnumerable<Reviewer> reviewers = await _unitOfWork.reviewerRepository.GetAll();
@@ -27,13 +30,14 @@ namespace BookReviewing_MVC.Controllers
             List<ReviewerDTO> reviewerDTOs = _mapper.Map<List<ReviewerDTO>>(reviewers);
             return View(reviewerDTOs);
         }
-
+        [Authorize(Roles =SD.Role_Admin)]
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<IActionResult> Create(ReviewerCreateDTO reviewerCreateDTO)
         {
             if (reviewerCreateDTO == null)
@@ -58,7 +62,7 @@ namespace BookReviewing_MVC.Controllers
             }
             return View(reviewerCreateDTO);
         }
-
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<IActionResult> Update(int? id)
         {
             if (id == 0 || id == null)
@@ -74,6 +78,7 @@ namespace BookReviewing_MVC.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<IActionResult> Update(ReviewerUpdateDTO reviewerUpdateDTO)
         {
             if (!ModelState.IsValid || reviewerUpdateDTO == null)
@@ -89,7 +94,7 @@ namespace BookReviewing_MVC.Controllers
             }
             return View(reviewerUpdateDTO);
         }
-
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == 0 || id == null)
