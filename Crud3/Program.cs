@@ -5,6 +5,8 @@ using BookReviewing_MVC.Services.Repositories;
 using Microsoft.EntityFrameworkCore;
 using BookReviewing_MVC.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using BookReviewing_MVC.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,10 +19,12 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(connectionString: connectionString));
 
 builder.Services.AddIdentity<ApplicationUser,IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
+
 
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 
