@@ -2,8 +2,6 @@
 <!DOCTYPE html>
 
 
-@inject SignInManager<IdentityUser> _signInManager;
-
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -26,8 +24,6 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
 
-                        @if (_signInManager.IsSignedIn(User))
-                        {
 
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                         <li class="nav-item">
