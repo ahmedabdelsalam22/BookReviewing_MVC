@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
 using BookReviewing_MVC.Services.IRepositories;
+using BookReviewing_MVC.Utilities;
 using BookReviewingMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 
 namespace BookReviewing_MVC.Controllers
 {
+    [Authorize]
     public class ReviewController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -13,6 +17,7 @@ namespace BookReviewing_MVC.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             IEnumerable<Review> reviews = await _unitOfWork.reviewRepository.GetAll(includes: new[] {"Book","Reviewer"});
@@ -30,6 +35,7 @@ namespace BookReviewing_MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<IActionResult> Create(Review review)
         {
             if(review == null) 
@@ -64,7 +70,7 @@ namespace BookReviewing_MVC.Controllers
             await _unitOfWork.save();
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<IActionResult> Update(int? id)
         {
             if (id == 0 || id == null) 
@@ -99,6 +105,7 @@ namespace BookReviewing_MVC.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<IActionResult> Update(Review review) 
         {
             if (review == null) 
@@ -122,7 +129,7 @@ namespace BookReviewing_MVC.Controllers
             await _unitOfWork.save();
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == 0 || id == null)
