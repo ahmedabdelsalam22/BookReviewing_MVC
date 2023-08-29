@@ -21,6 +21,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(conn
 builder.Services.AddIdentity<ApplicationUser,IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
+builder.Services.ConfigureApplicationCookie(x => 
+{
+    x.LoginPath = $"Identity/Acount/Login";
+    x.LogoutPath = $"Identity/Acount/Logout";
+    x.AccessDeniedPath = $"Identity/Acount/AccessDenied";
+});
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
