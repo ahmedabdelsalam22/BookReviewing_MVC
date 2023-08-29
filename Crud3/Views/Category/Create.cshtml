@@ -1,4 +1,5 @@
 ﻿@using BookReviewingMVC.Models;
+@using BookReviewing_MVC.Utilities;
 @model Category
 @{
     ViewData["Title"] = "Create";
@@ -10,11 +11,13 @@
         <input asp-for="Name" type="text" class="form-control"/>
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
-    <div class="m-3">
-        <button type="submit" class="btn btn-primary">
-            Create
-        </button>
-    </div>
+    
+        <div class="m-3">
+            <button type="submit" class="btn btn-primary">
+                Create
+            </button>
+        </div>
+    
     <div class="m-3">
         <button type="submit" asp-action="Index" class="btn btn-secondary">
             Back to categories

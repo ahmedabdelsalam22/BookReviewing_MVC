@@ -1,4 +1,5 @@
 ﻿@using BookReviewingMVC.Models;
+@using BookReviewing_MVC.Utilities;
 @model IEnumerable<Author>
 @{
     ViewData["Title"] = "Index";
@@ -9,11 +10,14 @@
     <div class="col-6">
         <h2>Authors</h2>
     </div>
-    <div class="col-6 text-end">
-        <a asp-controller="Author" asp-action="Create" class="btn btn-primary">
-            Create
-        </a>
-    </div>
+    @if (User.IsInRole(SD.Role_Admin))
+    {
+        <div class="col-6 text-end">
+            <a asp-controller="Author" asp-action="Create" class="btn btn-primary">
+                Create
+            </a>
+        </div>
+    }
 </div>
 
 <table class="table table-striped" style="width:100%">
@@ -24,8 +28,11 @@
             <th>First Name</th>
             <th>Last Name</th>
             <th>Country</th>
-            <th>Update</th>
-            <th>Delete</th>
+            @if (User.IsInRole(SD.Role_Admin))
+            {
+                <th>Update</th>
+                <th>Delete</th>
+            }
         </tr>
     </thead>
 
@@ -37,12 +44,15 @@
                 <td>@n.FirstName</td>
                 <td>@n.LastName</td>
                 <td>@n.Country.Name</td>
-                <td width="10%">
-                    <a asp-controller="Author" asp-action="Update" asp-route-id="@n.Id" class="btn btn-primary">Update</a>
+                @if (User.IsInRole(SD.Role_Admin))
+                {
+                    <td width="10%">
+                        <a asp-controller="Author" asp-action="Update" asp-route-id="@n.Id" class="btn btn-primary">Update</a>
+                    </td>
+                    <td width="10%">
+                        <a asp-controller="Author" asp-action="Delete" asp-route-id="@n.Id" class="btn btn-danger">Delete</a>
                 </td>
-                <td width="10%">
-                    <a asp-controller="Author" asp-action="Delete" asp-route-id="@n.Id" class="btn btn-danger">Delete</a>
-                </td>
+                }
             </tr>
         }
     </tbody>

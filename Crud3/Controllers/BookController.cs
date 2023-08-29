@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using BookReviewing_MVC.DTOS;
 using BookReviewing_MVC.Services.IRepositories;
+using BookReviewing_MVC.Utilities;
 using BookReviewingMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookReviewing_MVC.Controllers
 {
+    [Authorize]
     public class BookController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -17,6 +20,7 @@ namespace BookReviewing_MVC.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var books = await _unitOfWork.bookRepository.GetAll();
@@ -26,11 +30,13 @@ namespace BookReviewing_MVC.Controllers
             }
             return View(books);
         }
-
+        [Authorize(Roles =SD.Role_Admin)]
         public IActionResult Create()
         {
             return View();
         }
+
+        [Authorize(Roles = SD.Role_Admin)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(BookCreateDTO bookCreateDTO)
@@ -54,6 +60,7 @@ namespace BookReviewing_MVC.Controllers
             return View(bookCreateDTO);
         }
 
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<IActionResult> Update(int? id)
         {
             if (id == 0|| id == null)
@@ -67,6 +74,7 @@ namespace BookReviewing_MVC.Controllers
             }
             return View(book);
         }
+        [Authorize(Roles = SD.Role_Admin)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(BookUpdateDTO bookUpdateDTO)
@@ -84,7 +92,7 @@ namespace BookReviewing_MVC.Controllers
             }
             return View(bookUpdateDTO);
         }
-
+        [Authorize(Roles = SD.Role_Admin)]
         public async Task<IActionResult> Delete(int bookId)
         {
             if (bookId == 0)
